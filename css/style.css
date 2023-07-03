@@ -1,3 +1,25 @@
-*{
-  font-family: 'Lexend';
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}  /*
+canvas {
+  border-radius: 5px;
+ background-image: url(../background.svg); 
+  background-position: center;
+  background-size: cover  ;
+  box-shadow: 0px 1px 3px 1px gray;
+}
+canvas:focus {
+  outline: none;
+} */
+.container {
+  border-radius: 5px;
+  /* background-image: url(../background.svg); */
+  background-position: center;
+  background-size: cover  ;
+  box-shadow: 0px 1px 3px 1px gray;
 }
