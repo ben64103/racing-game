@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <div class="content">
-      
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js – Hello cube</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -applesystem, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+      html,
+      body {
+        height: 100vh;
+        overflow: hidden;
+        width: 100vw;
+      }
+      #threejs-container {
+        position: block;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <script src="js/three.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
+  </head>
+  <body>
+    <div id="threejs-container"></div>
+    <script type="module">
+      // Hello Cube App
+      // Your first Three.js application
+      // sizes
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      // scene
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x77777);
+      // camera
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      camera.position.set(0, 0, 10);
+      // cube
+      const geometry = new THREE.BoxGeometry(2, 2, 2);
+      const material = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        wireframe: true,
+      });
+      const cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+      // renderer
+      const renderer = new THREE.WebGL1Renderer();
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      // rendering the scene
+      const container = document.querySelector("#threejs-container");
+      container.append(renderer.domElement);
+      renderer.render(scene, camera);
+    </script>
+  </body>
 </html>

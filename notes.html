@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      /* Using Three.js */
+      /* There is a Renderer. This is arguably the main object of three.js.
+            /* There is a scenegraph which is a tree like structure, consisting of various objects like a Scene object, multiple Mesh objects, Light objects, Group, Object3D, and Camera objects. */
+
+      /* A scene object defines the root of the scenegraph and contains properties like background color and fog */
+
+      /* In the scenegraph diagram the camera is out of the scene. it is used to represent that in three js unlike other objects. The camera
+            does not have to be in the scenegraph to function. */
+
+      function main() {
+        const canvas = document.getElementById("canvas");
+        const renderer = new Three.WebGLRenderer({ antialias: true, canvas });
+
+        //Constructor
+        // Three.PerspectiveCamera( fov : Number, aspect : Number, near : Number, far : Number )
+        // fov — Camera frustum vertical field of view.
+        // aspect — Camera frustum aspect ratio.
+        // near — Camera frustum near plane.
+        // far — Camera frustum far plane.
+
+        const fov = 75;
+        const aspect = 2; // the canvas default
+        const near = 0.1;
+        const far = 5;
+
+        // PerspectiveCamera()
+        //This projection mode is designed to mimic the way the human eye sees. It is the most common projection mode used for rendering a 3D scene.
+        const camera = new Three.PerspectiveCamera(fov, aspect, near, far);
+      }
+    </script>
+  </body>
+</html>
