@@ -30,7 +30,7 @@
   </head>
   <body>
     <div id="threejs-container"></div>
-    <script type="module">
+    <!-- <script type="module">
       // Hello Cube App
       // Your first Three.js application
       // sizes
@@ -58,6 +58,23 @@
       const container = document.querySelector("#threejs-container");
       container.append(renderer.domElement);
       renderer.render(scene, camera);
+    </script> -->
+    <script>
+       const renderer = new THREE.WebGLRenderer()
+       renderer.setSize(window.innerWidth, window.innerHeight)
+       document.body.appendChild(renderer.domElement)
+
+       const fov = 1;
+       const aspect = window.innerWidth/window.innerHeight;
+       const near = 1;
+       const far = 500;
+
+       const scene = new THREE.Scene()
+
+       const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
+       camera.position.set(0, 0, 100)
+
+      renderer.render(scene, camera)
     </script>
   </body>
 </html>

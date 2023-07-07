@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      #element {
+        background: rebeccapurple;
+        width: 200px;
+        height: 150px;
+      }
+    </style>
+
+    <!-- <script type="module" src="js/three.min.js"></script> -->
+  </head>
+  <body>
+    <div id="element"></div>
+
+    <script>
+      const element = document.getElementById('element')
+      let start, previousTimeStamp;
+      let done = false;
+
+      function step(timeStamp) {
+          if(start === undefined) {
+              start = timeStamp;
+          }
+          const elapsed = timeStamp - start;
+
+          if(previousTimeStamp !== timeStamp) {
+              // Math.min is used here to make sure the element stops exactly at 200px
+              const count = Math.min(0.1 * elapsed, 200)
+              element.style.transform = `translate(${count}px)`
+              count === 200 ? done = true : done = false
+          }
+
+          if(elapsed < 2000) {
+
+            // Stop the animation after 2 seconds
+            previousTimeStamp = timeStamp;
+            if(!done){
+              window.requestAnimationFrame(step)
+            }
+          }
+
+          console.log(elapsed)
+          console.log(timeStamp)
+      }
+
+      window.requestAnimationFrame(step)
+    </script>
+  </body>
+</html>

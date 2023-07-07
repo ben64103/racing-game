@@ -4,29 +4,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        overflow: hidden;
+      }
+      *,
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+      canvas {
+        display: block;
+      }
+      #slider-container {
+        position: absolute;
+        top: 20px;
+        left: 10px;
+      }
+      #slider-container input {
+        width: 300px;
+        position: absolute;
+      }
+    </style>
+
+    <script src="js/three.min.js"></script>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
-    <script>
-      /* Using Three.js */
-      /* There is a Renderer. This is arguably the main object of three.js.
+    <!-- <div id="slider-container">
+      <input type="range" id="slider" min="0" max="2" step="0.01" value="1" />
+    </div> -->
+    <canvas id="c"></canvas>
+    <!-- <script type="module">
+      // import * as THREE from "three";
+
+      function main() {
+        const canvas = document.querySelector("#c");
+        const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+
+        // Perspective Camera
+        // these 4 values dictate the 3d space
+        // const fov = 75;
+        // const aspect = window.innerWidth/window.innerHeight; // canvas default  300x150 or 300/150
+        // const near = 0.1;
+        // const far = 5;
+
+        const camera = new THREE.PerspectiveCamera(
+          75, // field of view
+          window.innerWidth / window.innerHeight, // 
+          0.1,
+          5
+        );
+      }
+
+      main();
+    </script> -->
+    <!-- <script>
+      /* Using THREE.js */
+      /* There is a Renderer. This is arguably the main object of THREE.js.
             /* There is a scenegraph which is a tree like structure, consisting of various objects like a Scene object, multiple Mesh objects, Light objects, Group, Object3D, and Camera objects. */
 
       /* A scene object defines the root of the scenegraph and contains properties like background color and fog */
 
-      /* In the scenegraph diagram the camera is out of the scene. it is used to represent that in three js unlike other objects. The camera
+      /* In the scenegraph diagram the camera is out of the scene. it is used to represent that in THREE js unlike other objects. The camera
             does not have to be in the scenegraph to function. */
 
-      function main() {
+      // function main() {
         const canvas = document.getElementById("canvas");
-        const renderer = new Three.WebGLRenderer({ antialias: true, canvas });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
 
         //Constructor
-        // Three.PerspectiveCamera( fov : Number, aspect : Number, near : Number, far : Number )
-        // fov — Camera frustum vertical field of view.
-        // aspect — Camera frustum aspect ratio.
+        // THREE.PerspectiveCamera( fov : Number, aspect : Number, near : Number, far : Number )
+        // fov — Camera frustum vertical field of view.short for field of view. In this case 75deg in the vertical dimension
+        // aspect — Camera frustum aspect ratio. - the display aspect in the canvas - by default the canvas is 300*150 pixels which makes the aspect 300/150 or 2;
         // near — Camera frustum near plane.
         // far — Camera frustum far plane.
+
+        // near and far represents the space in front of the camera that will be rendered. anything before that range will not be drawn(be clipped)
 
         const fov = 75;
         const aspect = 2; // the canvas default
@@ -35,8 +91,89 @@
 
         // PerspectiveCamera()
         //This projection mode is designed to mimic the way the human eye sees. It is the most common projection mode used for rendering a 3D scene.
-        const camera = new Three.PerspectiveCamera(fov, aspect, near, far);
+        const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+        camera.position.z = 2; // Wider than the field of view
+
+        const scene = new THREE.Scene()
+
+        const boxWidth = 1;
+        const boxHeight = 1;
+        const boxDepth = 1;
+        const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth)
+        const material = new THREE.MeshBasicMaterial({color: 0x44aa88})
+
+        const cube = new THREE.Mesh(geometry, material)
+        scene.add(cube)
+        renderer.render(scene, camera)
+
+      // }
+    </script> -->
+
+    <script>
+      const scene = new THREE.Scene();
+      const canvas = document.getElementById("c");
+      const renderer = new THREE.WebGLRenderer({ canvas });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        5
+      );
+      camera.position.z = 3;
+
+      console.log(renderer.domElement);
+      renderer.setClearColor(0x003300);
+      // A Geometry (the shape of the object)
+      // A Material (how to draw the object, shiny or flat, what color, what texture(s) to apply. Etc.)
+
+      // Geometry
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      // Material
+      const material = new THREE.MeshBasicMaterial({ color: 0xffc040 });
+
+      const cube = new THREE.Mesh(geometry, material);
+
+      
+      const slider = document.getElementById("slider");
+      slider.addEventListener("input", (e) => {
+        cube.rotation.y = slider.value * 100;
+        console.log(cube.rotation.y);
+      });
+
+      // cube.rotation.x = rotateCube();
+      cube.rotation.y = 100;
+      function render(time) {
+        time *= 0.001; // convert time to seconds
+
+        cube.rotation.x = time;
+        cube.rotation.y = time;
+        cube.rotation.z = time;
+
+        renderer.render(scene, camera);
+
+        requestAnimationFrame(render);
       }
+      requestAnimationFrame(render);
+      // cube.rotation.z = 400;
+      scene.add(cube);
+      // Add lighting
+      // const light = new THREE.DirectionalLight(0xffffff, 1);
+      // light.position.set(0, 1, 1);
+      // scene.add(light);
+
+
+      renderer.render(scene, camera);
+
+      // function render(time) {
+      //   item *= 0.001;
+
+      //   cube.rotation.x = time;
+      //   cube.rotation.y = time;
+
+      //   requestAnimationFrame(render)
+      // }
+      // requestAnimationFrame
     </script>
   </body>
 </html>
